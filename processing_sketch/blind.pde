@@ -14,10 +14,11 @@ void setup()
   PFont myFont = createFont(PFont.list()[2], 14);
   textFont(myFont);
   
-  // I know that the first port in the serial list on my mac
-  // is always my  FTDI adaptor, so I open Serial.list()[0].
+  // The serial list on a  mac is always my  FTDI adaptor, 
+  // so I open Serial.list()[0].
   // On Windows machines, this generally opens COM1.
   // Open whatever port is the one you're using.
+  // We will be using COM3 port to communicate with Arduino
   String portName = Serial.list()[0];
   myPort = new Serial(this, "COM3", 9600);
 }
@@ -28,7 +29,7 @@ void draw()
   }
   background(0);             // Set background to black
  
-  fill(255);
+  fill(255); // set default fill for rectangles
   rect(xpos, ypos, w, h);
   rect(xpos + 35, ypos, w, h);
   rect(xpos + 70, ypos, w, h);
@@ -38,12 +39,16 @@ void draw()
   rect(xpos +210, ypos, w, h);
   rect(xpos +245, ypos, w, h);
   
+/*
+* display the piano key that is pressed on the keyboard connected to arduino
+* and also an ellipse for a visual effect
+*/
   switch (val) {
         case 1: // Q -> 1 -> C
           fill(204, 102, 0);
           rect(xpos, ypos, w, h);
           keyn= "C";
-          fill(215,100,50);
+          fill(215,100,50); 
           ellipse(129, 180, 30, 30);
           break;
         case 2: // W -> 2 -> D 
@@ -98,8 +103,7 @@ void draw()
         default: 
           break;
   }
-  
-   // write some text
+   // write musical note
    fill(255);
    text("Music note: " + keyn, 10, 120);
 }
